@@ -62,12 +62,19 @@ var ctx = document.getElementById('highest-price-chart').getContext('2d');
 var barChart = new Chart(highestPriceChartCanvas.getContext('2d')), {
     type: 'bar',
     data: {
-        labels: stocks[0].cost.map(cost => cost.highestprice),
+        labels: stocks[0].value.map(cost => cost.highestprice),
         datasets: [{
-            label: stocks.meta.symbol,
+            label: getHighestPrice(stocks.meta.symbol),
             data: stocks.cost.map(cost => parseFloat(cost.high)),
-            backgroundColor: getHighestPrice(stock.meta.symbol),
+            backgroundColor: getColor(stock.meta.symbol),
             borderColor: getColor(stock.meta.symbol),
+            options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              },
         }]
     }
 };
