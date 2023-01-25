@@ -58,42 +58,39 @@ function getColor(stock){
 console.log(stocks[0].values)
 
 // Bar Chart
+var xValues = mockData.symbol;
+var yValues = mockData.value.high;
+var barColors = getColor(stock.meta.symbol)
+
 var ctx = document.getElementById('highest-price-chart').getContext('2d');
 var barChart = new Chart(highestPriceChartCanvas.getContext('2d')), {
     type: 'bar',
     data: {
-        labels: stocks[0].value.map(cost => cost.highestprice),
+        labels: xValues,
         datasets: [{
-            label: getHighestPrice(stocks.meta.symbol),
-            data: stocks.cost.map(cost => parseFloat(cost.high)),
-            backgroundColor: getColor(stock.meta.symbol),
-            borderColor: getColor(stock.meta.symbol),
-            options: {
-                scales: {
-                  y: {
-                    beginAtZero: true
-                  }
-                }
-              },
+            // label: getHighestPrice(stocks.high),
+            // data: stocks.values.map(value => parseFloat(value.high)),
+            backgroundColor: barColors,
+            data: yValues,
         }]
     }
 };
 
 function getHighestPrice(stock) {
     if(stock === "GME"){
-        return Math.max(...GME.map(cost => cost.highestprice))
+        return Math.max(...GME.map(value => value.high))
     }
     if(stock === "MSFT"){
-        return Math.max(...MSFT.map(cost => cost.highestprice))
+        return Math.max(...MSFT.map(value => value.high))
     }
     if(stock === "DIS"){
-        return Math.max(...DIS.map(cost => cost.highestprice))
+        return Math.max(...DIS.map(value => value.high))
     }
     if(stock === "BNTX"){
-        return Math.max(...BNTX.map(cost => cost.highestprice))
+        return Math.max(...BNTX.map(value => value.high))
     }
 }
-console.log(stocks[0].cost)
+console.log(stocks[0].value)
   
 }
 
