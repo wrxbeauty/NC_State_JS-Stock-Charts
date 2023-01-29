@@ -1,5 +1,5 @@
-// const { GME, MSFT, DIS, BNTX } = mockData;
-// const stocks = [GME, MSFT, DIS, BNTX];
+const { GME, MSFT, DIS, BNTX } = mockData;
+const stocks = [GME, MSFT, DIS, BNTX];
 
 async function main() {
     const timeChartCanvas = document.querySelector('#time-chart');
@@ -10,9 +10,10 @@ async function main() {
     const result = await response.json()
     console.log(result)
 
-    stocks.forEach(stock => stock.values.reverse())
-
     // Line Chart
+    stocks.forEach( stock => stock.values.reverse())
+
+    // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
@@ -22,14 +23,13 @@ async function main() {
                 data: stock.values.reverse().map(value => parseFloat(value.high)),
                 backgroundColor: getColor(stock.meta.symbol),
                 borderColor: getColor(stock.meta.symbol),
-            })
-            )
-        },
+            }))
+        }
     });
-
+    
     // Bar Chart
     const xValues = stocks.map(stock => stock.meta.symbol);
-    const yValues = stocks.map(value => stock.parseFloat(value.high));
+    const yValues = stocks.map(stock => stock.values.high);
     
     new Chart(highestPriceChartCanvas.getContext('2d'), {
         type: 'bar',
@@ -40,31 +40,29 @@ async function main() {
                 // data: stocks.values.map(value => parseFloat(value.high)),
                 borderColor: ['black', 'black', 'black', 'black'],
                 backgroundColor: ['red', 'pink', 'yellow', 'blue'],
-                data: yValues,
+                data: getHighestPrice(yValues),
             }]
         }
     });
+   
+    // function getHighestValue(stock) {
+    //     let highest = 0;
 
-    function getHighestValue(stock) {
-        let highest = 0;
-        
-        for (let i = 1; i < highest.length; i++) {
-            stocks[0].value.map(highest.value)
-        }
-    }
+    //     highest.map(value => value.meta.values)
+    // }
 
     function getHighestPrice(stock) {
         if (stock === "GME") {
-            return Math.max(...GME.map(value => value.high))
+            return Math.max(...GME.map(values => values.high))
         }
         if (stock === "MSFT") {
-            return Math.max(...MSFT.map(value => value.high))
+            return Math.max(...MSFT.map(values => values.high))
         }
         if (stock === "DIS") {
-            return Math.max(...DIS.map(value => value.high))
+            return Math.max(...DIS.map(values => values.high))
         }
         if (stock === "BNTX") {
-            return Math.max(...BNTX.map(value => value.high))
+            return Math.max(...BNTX.map(values => values.high))
         }
     }
 
